@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
-
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
@@ -26,44 +25,30 @@ class TransactionList extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (trx, index) {
                 return Card(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          width: 2,
-                          color: Theme.of(context).primaryColor,
-                        )),
-                        child: Card(
-                          child: Text(
-                            transactionList[index].amount.toStringAsFixed(2),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 6),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: FittedBox(
+                        child: Text('\$${transactionList[index].amount}'),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Card(
-                            child: Text(
-                              transactionList[index].title,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                          Card(
-                            child: Text(DateFormat.yMMMMd()
-                                .format(transactionList[index].date)),
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      transactionList[index].title,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue),
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMEd().format(transactionList[index].date),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
                   ),
                 );
               },
