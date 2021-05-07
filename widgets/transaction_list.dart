@@ -26,23 +26,31 @@ class TransactionList extends StatelessWidget {
               itemBuilder: (trx, index) {
                 return Card(
                   elevation: 5,
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 6),
+                  margin: EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 6,
+                  ),
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 30,
-                      child: FittedBox(
-                        child: Text('\$${transactionList[index].amount}'),
+                      child: Padding(
+                        padding: EdgeInsets.all(6),
+                        child: FittedBox(
+                            child: Text('\$${transactionList[index].amount}')),
                       ),
                     ),
                     title: Text(
                       transactionList[index].title,
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
                     ),
                     subtitle: Text(
-                      DateFormat.yMMMEd().format(transactionList[index].date),
+                      DateFormat.yMMMEd().format(
+                        transactionList[index].date,
+                      ),
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
