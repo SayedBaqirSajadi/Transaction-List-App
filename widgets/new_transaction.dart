@@ -18,14 +18,11 @@ class _NewTransactionState extends State<NewTransaction> {
     final submitedTitle = _titleController.text;
     final submitedAmount = double.parse(_amountController.text);
 
-    if (submitedTitle.isEmpty || submitedAmount <= 0) {
+    if (submitedTitle.isEmpty || submitedAmount <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.newtrx(
-      submitedTitle,
-      submitedAmount,
-    );
+    widget.newtrx(submitedTitle, submitedAmount, _selectedDate);
   }
 
   void datePicker() {
