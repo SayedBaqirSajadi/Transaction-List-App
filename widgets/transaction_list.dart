@@ -1,15 +1,35 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
-class TransactionList extends StatelessWidget {
+class TransactionList extends StatefulWidget {
   final List<Transaction> transactionList;
   final Function deleteTx;
   TransactionList(this.transactionList, this.deleteTx);
 
   @override
+  _TransactionListState createState() => _TransactionListState();
+}
+
+class _TransactionListState extends State<TransactionList> {
+  Color _bgColor;
+
+  void initState() {
+    const avalableColors = [
+      Colors.purple,
+      Colors.red,
+      Colors.black,
+      Colors.blue,
+    ];
+    _bgColor = avalableColors[Random().nextInt(4)];
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return transactionList.isEmpty
+    return widget.transactionList.isEmpty
         ? Column(
             children: <Widget>[
               Text('No Transaction is added yet!'),
@@ -32,15 +52,17 @@ class TransactionList extends StatelessWidget {
                   ),
                   child: ListTile(
                     leading: CircleAvatar(
+                      backgroundColor: _bgColor,
                       radius: 30,
                       child: Padding(
                         padding: EdgeInsets.all(6),
                         child: FittedBox(
-                            child: Text('\$${transactionList[index].amount}')),
+                            child: Text(
+                                '\$${widget.transactionList[index].amount}')),
                       ),
                     ),
                     title: Text(
-                      transactionList[index].title,
+                      widget.transactionList[index].title,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -49,7 +71,7 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(
                       DateFormat.yMMMEd().format(
-                        transactionList[index].date,
+                        widget.transactionList[index].date,
                       ),
                       style: TextStyle(
                         fontSize: 13,
@@ -57,17 +79,28 @@ class TransactionList extends StatelessWidget {
                         color: Colors.blue,
                       ),
                     ),
-                    trailing: IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      ),
-                      onPressed: () => deleteTx(transactionList[index].id),
-                    ),
+                    trailing: MediaQuery.of(context).size.width > 360
+                        ? FlatButton.icon(
+                            icon: Icon(
+                              Icons.delete,
+                            ),
+                            textColor: Colors.red,
+                            label: Text('Delete'),
+                            onPressed: () => widget
+                                .deleteTx(widget.transactionList[index].id),
+                          )
+                        : IconButton(
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            onPressed: () => widget
+                                .deleteTx(widget.transactionList[index].id),
+                          ),
                   ),
                 );
               },
-              itemCount: transactionList.length,
+              itemCount: widget.transactionList.length,
             ),
           );
   }
